@@ -1,0 +1,117 @@
+﻿@model CabFrontend.Models.CabRating
+@{
+    ViewData["Title"] = "PostRating";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+
+<link rel="stylesheet" href="~/css/ani.css" asp-append-version="true" />
+
+
+@using (Html.BeginForm("RatingPost", "Rating", FormMethod.Post))
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+    
+    <div class="rating-box" style="width:60%;margin:auto;margin-top:130px">
+        <header>How was your experience?</header>
+        <div class="stars" style="width:50%;margin:auto">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+        </div>
+    </div>
+
+    <input type="hidden" name="SelectedRating" id="SelectedRating" value="0" />
+    <div style="text-align:center;margin-top:10px">
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+    </div>
+}
+
+<style>
+    .stars i {
+        font-size: 2em;
+        cursor: pointer;
+        transition: color 0.5s;
+    }
+
+    .stars i.active {
+        color: gold;
+    }
+</style>
+
+
+
+<script>
+    const stars = document.querySelectorAll(".stars i");
+    const hiddenInput = document.getElementById("SelectedRating");
+
+    stars.forEach((star, index) => {
+        star.addEventListener("click", () => {
+            const ratingValue = index + 1;
+            hiddenInput.value = ratingValue;
+
+            stars.forEach((s, i) => {
+                if (i < ratingValue) {
+                    s.classList.add("active");
+                } else {
+                    s.classList.remove("active");
+                }
+            });
+        });
+    });
+</script>
+
+
+@* @using (Html.BeginForm("RatingPost", "Rating", FormMethod.Post))
+{
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.1/css/all.min.css" />
+
+    <div class="rating-box">
+        <header>How was your experience?</header>
+        <div class="stars">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+        </div>
+    </div>
+
+    @Html.HiddenFor(model => model.Rating)
+    <button type="submit" class="btn btn-primary">Submit Rating</button>
+}
+
+<style>
+    .stars i {
+        font-size: 2em;
+        cursor: pointer;
+        transition: color 0.5s;
+    }
+
+        .stars i.active {
+            color: gold;
+        }
+</style>
+
+<script>
+    const stars = document.querySelectorAll(".stars i");
+    const hiddenInput = document.getElementById("SelectedRating");
+
+    stars.forEach((star, index) => {
+        star.addEventListener("click", () => {
+            hiddenInput.value = index + 1;
+
+            stars.forEach((s, i) => {
+                if (i <= index) {
+                    s.classList.add("active");
+                } else {
+                    s.classList.remove("active");
+                }
+            });
+        });
+    });
+</script> *@
+
+

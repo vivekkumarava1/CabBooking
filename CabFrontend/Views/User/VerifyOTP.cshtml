@@ -1,0 +1,33 @@
+﻿@model CabFrontend.Models.VerifyOTPViewModel
+@{
+    ViewData["Title"] = "VerifyOTP";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+
+<link rel="stylesheet" href="~/css/Forgetpassword.css" asp-append-version="true" />
+<script src="~/lib/jquery/dist/jquery.js"></script>
+
+<!-- Include Toastr CSS and JavaScript -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css" />
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+
+<div id="aa">
+    <form id="formReset" asp-controller="User" method="post">
+        <div>
+            <h1> Reset Password</h1>
+            <label>OTP</label>
+            <input asp-for="OTP" placeholder="Enter Otp" required>
+        </div>
+        <br />
+        <div>
+            <button type="submit" asp-action="VerifyOTP" asp-controller="User">
+                Submit
+            </button>
+        </div>
+
+
+    </form>
+
+</div>
+

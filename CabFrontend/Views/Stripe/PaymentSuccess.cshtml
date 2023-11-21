@@ -1,0 +1,24 @@
+﻿
+@{
+    ViewData["Title"] = "PaymentSuccess";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+
+<style>
+    .gif-image {
+        width: 460px; /* Adjust the width as needed */
+        height: auto; /* Maintains aspect ratio */
+    }
+</style>
+
+<div style="text-align:center">
+
+
+    <img src="@Url.Content("~/css/1cbd3594bb5e8d90924a105d4aae924c.gif")" alt="Your GIF Image" class="gif-image" />    
+    <h1>PaymentSuccess</h1>
+    
+
+<p>Your payment was successful!</p>
+    <p>You can Rate Your Services</p>
+    <a class="btn btn-danger" asp-area="" asp-controller="User" asp-action="Booking">MyBooking</a>
+</div>

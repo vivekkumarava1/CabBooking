@@ -1,0 +1,527 @@
+﻿
+* {
+    margin: 0;
+    padding: 0;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    -webkit-transition: 0.3s;
+    /*-o-transition: 0.3s;
+    transition: 0.3s;*/
+}
+.parent {
+    height: 65vh; /* Set the height to full viewport height */
+    overflow: visible; /* Hide overflow */
+}
+
+body {
+    background-color: #f4f4f4;
+    height: 80%;
+    
+    /*font-family: Montserrat;*/
+    /*overflow-x: hidden;*/
+    /*overflow: hidden;*/
+    font-family: 'Arial', sans-serif;
+    /*background-color: lightgrey;*/ /* Light gray background */
+    margin: 0;
+    padding: 0;
+}
+
+article,
+aside,
+details,
+figure,
+footer,
+header,
+main,
+menu,
+nav,
+section,
+summary {
+    display: block;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6,
+p,
+a {
+    -ms-word-wrap: break-word;
+    word-wrap: break-word;
+    text-decoration: none;
+}
+
+img {
+    border: none;
+}
+
+*:focus {
+    outline: none;
+}
+
+.clearfix::after {
+    content: "";
+    display: table;
+    clear: both;
+}
+
+.bg-illustration {
+    position: relative;
+    height: 90vh;
+    width: 1194px;
+    background: url("./By my car-bro.png") no-repeat center center ;
+    background-size: cover;
+    float: left;
+    -webkit-animation: bgslide 2.3s forwards;
+    animation: bgslide 2.3s forwards;
+}
+
+    .bg-illustration img {
+        width: 248px;
+        -webkit-user-select: none;
+        -moz-user-select: none;
+        -ms-user-select: none;
+        user-select: none;
+        height: auto;
+        margin: 19px 0 0 25px;
+    }
+
+@-webkit-keyframes bgslide {
+    from {
+        left: -100%;
+        width: 0;
+        opacity: 0;
+    }
+
+    to {
+        left: 0;
+        width: 1194px;
+        opacity: 1;
+    }
+}
+
+@keyframes bgslide {
+    from {
+        left: -100%;
+        width: 0;
+        opacity: 0;
+    }
+
+    to {
+        left: 0;
+        width: 1194px;
+        opacity: 1;
+    }
+}
+
+
+/*.login {
+    max-height: 90vh;
+    overflow-Y: auto;
+    float: left;
+    margin: 0 auto;
+    width: calc(100% - 1194px);
+}
+
+    .login .container {
+        width: 505px;
+        margin: 0 auto;
+        position: relative;
+    }
+
+        .login .container h1 {*/
+           /* margin-top: 100px; */
+            /*font-size: 20px;
+            font-weight: bolder;
+        }
+
+        .login .container .login-form {*/
+           /* margin-top: 112px; */
+        /*}            .login .container .login-form form {
+                display: -ms-grid;
+                display: grid;
+            }
+
+                .login .container .login-form form input {
+                    font-size: 16px;
+                    font-weight: normal;
+                    background: rgba(57, 57, 57, 0.07);
+                    margin: 12.5px 0;
+                    height: 40px;
+                    border: none;
+                    padding: 0 30px;
+                    border-radius: 10px;
+                }
+
+                .login .container .login-form form button[type=submit] {
+                    background: -webkit-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+                    background: -o-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+                    background: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
+                    border: none;
+                    margin-top: 10px;
+                    margin-bottom: 20px;
+                    width: 150px;
+                    height: 38px;
+                    text-transform: uppercase;
+                    color: white;
+                    border-radius: 10px;
+                    position: relative;
+                    z-index: 5;
+                    margin-left:30%;
+                    font-weight: bold;
+                    font-size: 20px;
+                }
+
+                    .login .container .login-form form button[type=submit]:hover::after {
+                        opacity: 1;
+                    }
+
+                    .login .container .login-form form button[type=submit]::after {
+                        content: "";
+                        position: absolute;
+                        z-index: -1;
+                        border-radius: 10px;
+                        opacity: 0;
+                        top: 0;
+                        left: 0;
+                        -webkit-transition: 0.3s ease-in-out;
+                        -o-transition: 0.3s ease-in-out;
+                        transition: 0.3s ease-in-out;
+                        right: 0;
+                        bottom: 0;
+                        background: -webkit-gradient(linear, left bottom, left top, from(#09203f), to(#537895));
+                        background: -webkit-linear-gradient(bottom, #09203f 0%, #537895 100%);
+                        background: -o-linear-gradient(bottom, #09203f 0%, #537895 100%);
+                        background: linear-gradient(to top, #09203f 0%, #537895 100%);
+                    }
+
+        .login .container .remember-form {
+            position: relative;
+            margin-top: -30px;
+        }
+
+            .login .container .remember-form input[type=checkbox] {
+                margin-top: 9px;
+            }
+
+            .login .container .remember-form span {
+                font-size: 18px;
+                font-weight: normal;
+                position: absolute;
+                top: 32px;
+                color: #3B3B3B;
+                margin-left: 15px;
+            }
+
+        .login .container .forget-pass {
+            position: absolute;
+            right: 0;
+            margin-top: 189px;
+        }
+
+            .login .container .forget-pass a {
+                font-size: 16px;
+                position: relative;
+                font-weight: normal;
+                color: #918F8F;
+            }
+
+                .login .container .forget-pass a::after {
+                    content: "";
+                    position: absolute;
+                    height: 2px;
+                    width: 100%;
+                    border-radius: 100px;
+                    background: -webkit-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+                    background: -o-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+                    background: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
+                    bottom: -4px;
+                    left: 0;
+                    -webkit-transition: 0.3s;
+                    -o-transition: 0.3s;
+                    transition: 0.3s;
+                    opacity: 0;
+                    right: 0;
+                }
+
+                .login .container .forget-pass a:hover::after {
+                    opacity: 1;
+                }*/
+
+
+
+/*.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+} */
+
+/*.container {
+    text-align: center;
+    height: 100px;
+    background-color: #ffffff;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}*/
+/*
+
+h1 {
+    color: #333333;
+    font-size: 28px;
+    margin-bottom: 20px;
+}
+
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+button {
+    margin-top: 15px;
+    background-color: #3498db;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    font-size: 16px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #2980b9;
+    }
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    font-size: 16px;
+}*/
+
+
+.login {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    /*height: 100vh;*/
+}
+
+.container {
+    text-align: center;
+    background-color: #ffffff;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+    height:80%;
+}
+
+h1 {
+    color: #343a40;
+    font-size: 36px;
+    margin-bottom: 30px;
+}
+
+.login-form {
+    max-width: 400px;
+    margin: 0 auto;
+}
+
+button {
+    margin-bottom: 20px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 12px 24px;
+    font-size: 18px;
+    cursor: pointer;
+    border-radius: 6px;
+    transition: background-color 0.3s ease;
+}
+
+    button:hover {
+        background-color: #0056b3;
+    }
+
+input,
+select {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 15px;
+    border: 1px solid #ced4da;
+    border-radius: 6px;
+    box-sizing: border-box;
+    font-size: 18px;
+}
+@media only screen and (min-width: 1024px) and (max-width: 1680px) {
+    .bg-illustration {
+        width: 50%;
+        -webkit-animation: none;
+        animation: none;
+    }
+
+    .login {
+        width: 50%;
+    }
+}
+/* Display 12", iPad PRO Portrait, iPad landscape */
+@media only screen and (max-width: 1024px) {
+    body {
+        overflow-x: hidden;
+    }
+
+    @-webkit-keyframes slideIn {
+        from {
+            left: -100%;
+            opacity: 0;
+        }
+
+        to {
+            left: 0;
+            opacity: 1;
+        }
+    }
+
+    @keyframes slideIn {
+        from {
+            left: -100%;
+            opacity: 0;
+        }
+
+        to {
+            left: 0;
+            opacity: 1;
+        }
+    }
+
+    .bg-illustration {
+        float: none;
+        background: url("./By my car-bro.png") center center;
+        background-size: cover;
+        -webkit-animation: slideIn 0.8s ease-in-out forwards;
+        animation: slideIn 0.8s ease-in-out forwards;
+        width: 100%;
+        height: 190px;
+        text-align: center;
+    }
+
+        .bg-illustration img {
+            width: 100px;
+            height: auto;
+            margin: 20px auto !important;
+            text-align: center;
+        }
+
+        .bg-illustration .burger-btn {
+            left: 33px;
+            top: 29px;
+            display: block;
+            position: absolute;
+        }
+
+            .bg-illustration .burger-btn span {
+                display: block;
+                height: 4px;
+                margin: 6px;
+                background-color: #fff;
+            }
+
+                .bg-illustration .burger-btn span:nth-child(1) {
+                    width: 37px;
+                }
+
+                .bg-illustration .burger-btn span:nth-child(2) {
+                    width: 28px;
+                }
+
+                .bg-illustration .burger-btn span:nth-child(3) {
+                    width: 20px;
+                }
+
+    .login {
+        float: none;
+        margin: 0 auto;
+        width: 100%;
+    }
+
+        .login .container {
+            -webkit-animation: slideIn 0.8s ease-in-out forwards;
+            animation: slideIn 0.8s ease-in-out forwards;
+            width: 85%;
+            float: none;
+        }
+
+            .login .container h1 {
+                font-size: 25px;
+                margin-top: 40px;
+            }
+
+            .login .container .login-form {
+                margin-top: 90px;
+            }
+
+                .login .container .login-form form input {
+                    height: 45px;
+                }
+
+                .login .container .login-form form button[type=submit] {
+                    height: 45px;
+                    margin-top: 100px;
+                }
+
+                .login .container .login-form .remember-form {
+                    position: relative;
+                    margin-top: -14px;
+                }
+
+                    .login .container .login-form .remember-form span {
+                        font-size: 16px;
+                        margin-top: 22px;
+                        top: inherit;
+                    }
+
+    .forget-pass {
+        position: absolute;
+        right: inherit;
+        left: 0;
+        bottom: -40px;
+        margin: 0 !important;
+    }
+
+        .forget-pass a {
+            font-size: 16px;
+            position: relative;
+            font-weight: normal;
+            color: #918F8F;
+        }
+
+            .forget-pass a::after {
+                content: "";
+                position: absolute;
+                height: 2px;
+                width: 100%;
+                border-radius: 100px;
+                background: -webkit-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+                background: -o-linear-gradient(110deg, #f794a4 0%, #fdd6bd 100%);
+                background: linear-gradient(-20deg, #f794a4 0%, #fdd6bd 100%);
+                bottom: -4px;
+                left: 0;
+                -webkit-transition: 0.3s;
+                -o-transition: 0.3s;
+                transition: 0.3s;
+                opacity: 0;
+                right: 0;
+            }
+
+            .forget-pass a:hover::after {
+                opacity: 1;
+            }
+}

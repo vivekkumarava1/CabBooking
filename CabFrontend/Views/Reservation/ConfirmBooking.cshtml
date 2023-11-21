@@ -1,0 +1,79 @@
+﻿@model CabFrontend.Models.BookingViewModel;
+
+@{
+    ViewData["Title"] = "ConfirmBooking";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+
+<style>
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f8f9fa; /* Light gray background */
+        margin: 0;
+        padding: 0;
+    }
+
+    .confirmation-container {
+        text-align: center;
+        max-width: 700px;
+        margin: 0 auto;
+        padding: 10px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        margin-top: 50px;
+    }
+
+    .gif-image {
+        width: 80%;
+        max-width: 300px;
+        height: auto;
+        margin-bottom: 20px;
+    }
+
+    h1 {
+        color: #007bff; /* Primary color */
+        font-size: 2.5em;
+        margin-bottom: 10px;
+    }
+
+    p, p1 {
+        color: #333;
+        font-size: 1.2em;
+        margin-bottom: 15px;
+    }
+
+    p1 {
+        font-weight: bold;
+    }
+
+    .btn-primary {
+        background-color: #007bff !important;
+        border: 1px solid #007bff !important;
+        padding: 10px 20px;
+        font-size: 1em;
+        text-decoration: none;
+        color: #ffffff !important;
+        border-radius: 5px;
+        transition: background-color 0.3s ease;
+    }
+
+    .btn-primary:hover {
+        background-color: #0056b3 !important;
+    }
+</style>
+
+<div class="confirmation-container">
+    <img src="@Url.Content("~/css/taxi_confirmation.gif")" alt="Your GIF Image" class="gif-image" />
+    <h1>Reservation Confirmed</h1>
+
+    <p>Your reservation has been confirmed successfully.</p>
+    <p1>Cab With Registration Number <span style="color:red">@Model.cabRegistration</span> and Model: <span style="color:red">@Model.cabModel</span> will arrive soon</p1>
+
+    <p>Thank you for choosing our service!</p>
+
+    <div style="text-align:center;margin-top:40px">
+        <h4>For canceling the cab or making a payment, visit My Booking by clicking the button below</h4>
+        <a  class="btn btn-danger" asp-area="" asp-controller="User" asp-action="Booking">MyBooking</a>
+    </div>
+</div>

@@ -1,0 +1,189 @@
+﻿
+@{
+    ViewData["Title"] = "MapView";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="initial-scale=1.0, user-scalable=no">
+    <meta charset="utf-8">
+    <title>Draggable directions</title>
+    <style>
+        #right-panel {
+            font-family: 'Roboto','sans-serif';
+            line-height: 30px;
+            padding-left: 10px;
+        }
+
+            #right-panel select, #right-panel input {
+                font-size: 15px;
+            }
+
+            #right-panel select {
+                width: 100%;
+            }
+
+            #right-panel i {
+                font-size: 12px;
+            }
+
+        html, body {
+            height: 100%;
+            margin: 0;
+            padding: 0;
+        }
+
+        #map {
+            height: 100%;
+            float: left;
+            width: 63%;
+            height: 100%;
+        }
+
+        #right-panel {
+            float: right;
+            width: 34%;
+            height: 100%;
+        }
+
+        .panel {
+            height: 100%;
+            overflow: auto;
+        }
+    </style>
+</head>
+<body>
+    <div id="map"></div>
+    <div id="right-panel">
+        <p>Total Distance: <span id="total"></span></p>
+        <p><a id="mapLink" href="#" title="Open in Google Maps" target="_blank">Open in Google Maps</a></p>
+    </div>
+    <script>
+        var origin = 'Barcelona, Spain';
+        var destin = 'Madrid, Spain';
+        var geocoder;
+        var hashPlaces = {};
+
+        function initMap() {
+            var map = new google.maps.Map(document.getElementById('map'), {
+                zoom: 6,
+                center: { lat: 41.557922, lng: -0.895386 },  //Spain.
+                gestureHandling: 'greedy'
+            });
+
+            var directionsService = new google.maps.DirectionsService;
+            var directionsDisplay = new google.maps.DirectionsRenderer({
+                draggable: true,
+                map: map,
+                panel: document.getElementById('right-panel')
+            });
+            geocoder = new google.maps.Geocoder();
+
+            directionsDisplay.addListener('directions_changed', function () {
+                computeTotalDistance(directionsDisplay.getDirections());
+                prepareMapLink(directionsDisplay.getDirections());
+            });
+
+            displayRoute(origin, destin, directionsService,
+                directionsDisplay);
+        }
+
+        function displayRoute(origin, destination, service, display) {
+            service.route({
+                origin: origin,
+                destination: destination,
+                waypoints: [{ location: 'Lleida, Spain' }, { location: 'Zaragoza, Spain' }],
+                travelMode: 'DRIVING',
+                avoidTolls: true
+            }, function (response, status) {
+                if (status === 'OK') {
+                    display.setDirections(response);
+                } else {
+                    alert('Could not display directions due to: ' + status);
+                }
+            });
+        }
+
+        function computeTotalDistance(result) {
+            var total = 0;
+            var myroute = result.routes[0];
+            for (var i = 0; i < myroute.legs.length; i++) {
+                total += myroute.legs[i].distance.value;
+            }
+            total = total / 1000;
+            document.getElementById('total').innerHTML = total + ' km';
+        }
+
+        function geocodePlaceId(placeId) {
+            return new Promise(function (resolve, reject) {
+                geocoder.geocode({ 'placeId': placeId }, function (results, status) {
+                    if (status === 'OK') {
+                        var r = Object.create(null);
+                        r[placeId] = results[0].formatted_address
+                        resolve(r);
+                    } else {
+                        reject('Geocode was not successful for the following reason: ' + status);
+                    }
+                });
+            });
+        }
+
+        function prepareMapLink(result) {
+            var arrWp = [];
+            result.geocoded_waypoints.forEach(function (wp) {
+                arrWp.push(wp.place_id);
+            });
+
+            var oplaceId = arrWp.shift();
+            var dplaceId = arrWp.pop();
+
+            var arrProm = [];
+            arrWp.forEach(function (pId) {
+                if (!hashPlaces[pId]) {
+                    arrProm.push(geocodePlaceId(pId));
+                }
+            });
+
+            if (arrProm.length) {
+                Promise.all(arrProm).then(function (values) {
+                    values.forEach(function (val) {
+                        for (key in val) {
+                            hashPlaces[key] = val[key];
+                        }
+                    });
+                    constructMapsUrl(oplaceId, dplaceId, arrWp);
+                }).catch(reason => {
+                    console.log(reason)
+                });
+            } else {
+                constructMapsUrl(oplaceId, dplaceId, arrWp);
+            }
+
+        }
+
+        function constructMapsUrl(originId, destinationId, waypoints) {
+            var res = "https://www.google.com/maps/dir/?api=1&";
+            res += "origin=" + encodeURIComponent(origin) + "&origin_place_id=" + originId;
+            res += "&destination=" + encodeURIComponent(destin) + "&destination_place_id=" + destinationId;
+
+            //debugger;
+            var wpAddr = [];
+            waypoints.forEach(function (wp) {
+                wpAddr.push(hashPlaces[wp]);
+            });
+
+            var waypointsStr = encodeURIComponent(wpAddr.join('|'));
+            var waypointsIds = waypoints.join('|');
+
+            res += "&waypoints=" + waypointsStr + "&waypoint_place_ids=" + waypointsIds + "&travelmode=driving";
+
+            var aElem = document.getElementById("mapLink");
+            aElem.setAttribute("href", res);
+        }
+    </script>
+    <script async defer
+            src="https://maps.googleapis.com/maps/api/js?key=AIzaSyDztlrk_3CnzGHo7CFvLFqE_2bUKEq1JEU&callback=initMap">
+    </script>
+</body>
+</html>

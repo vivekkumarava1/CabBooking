@@ -1,0 +1,139 @@
+﻿@model CabFrontend.Models.Cab;
+@{
+    ViewData["Title"] = "UserFirstPage";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+
+
+
+
+<link rel="stylesheet" href="~/css/userpage.css" asp-append-version="true" />
+
+
+
+<div class="parent">
+    <div class="bg-illustration">
+        @* <img src="./css/By my car-bro.png" alt="logo"> *@
+
+        <div class="burger-btn">
+
+            <span></span>
+        </div>
+
+    </div>
+
+    <div class="login">
+        <div class="container">
+            <h1 style="text-align:center">Book Your Cab</h1>
+
+            <div class="login-form">
+                <button class="btn btn-primary btn-lg" style="justify-content:center" onclick="handlefunction()">Let me Access your Location</button>
+                <form action="">
+                    <input type="hidden" id="longitude" placeholder="Enter Longitude" asp-for="Longitude" asp-controller="User">
+                    <input type="hidden" id="latitude" placeholder="Enter Latitude" asp-for="Latitude" asp-controller="User">
+                    <input type="hidden" type="text" id="address" placeholder="Enter Location" asp-for="Latitude" asp-controller="User" readonly>
+                    <select name="selectedDestination" style="height:3rem" background-color="black">
+                        <option>Adugodi</option>
+                        <option>A F Station Yelahanka</option>
+                        <option>Agara</option>
+                        <option>Agram</option>
+                        <option>Amruthahalli</option>
+                        <option>Bangalore International Airport</option>
+                        <option>Bannerghatta</option>
+                        <option>Bapagrama</option>
+                        <option>Bettahalsur</option>
+                        <option>Bilekahalli</option>
+                        <option>Basavanagudi</option>
+                        <option>Bellandur</option>
+                        <option>Bidaraguppe</option>
+                        @* <option>Bestamaranahalli</option>
+                        <option>Benson Town</option> *@
+                        <option>Bidrahalli</option>
+                        <option>Begur</option>
+                       
+                    </select>
+
+
+                    <button type="submit" asp-action="GetNearestCabs" asp-controller="User">Find Cab</button>
+
+                </form>
+
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+
+
+
+<p id="demo"></p>
+
+<script>
+
+
+
+    const x = document.getElementById("demo");
+    const longitude = document.getElementById("longitude");
+    const latitude = document.getElementById("latitude");
+    const address = document.getElementById("address");
+
+
+    function getLocation() {
+        if (navigator.geolocation) {
+            navigator.geolocation.getCurrentPosition(showPosition);
+
+        } else {
+            x.innerHTML = "Geolocation is not supported by this browser.";
+        }
+    }
+
+    function showPosition(position) {
+        longitude.value = position.coords.longitude;
+        latitude.value = position.coords.latitude;
+        getAddressofUser(position.coords.latitude, position.coords.longitude);
+    }
+
+
+    async function getAddressofUser(latitude, longitude) {
+        await fetch(`https://nominatim.openstreetmap.org/reverse?format=json&lat=${latitude}&lon=${longitude}`)
+            .then(response => {
+                if (response.ok) {
+                    return response.json(); // Parse the response data as JSON
+                } else {
+                    throw new Error('API request failed');
+                }
+            })
+            .then(data => {
+                // Process the response data here
+                address.value = data.display_name;
+                console.log(data); // Example: Logging the data to the console
+            })
+
+            .catch(error => {
+                console.error('Error', error);
+            });
+
+    }
+
+    function handlefunction() {
+        getLocation();
+
+        getAddressofUser(latitude, longitude);
+    }
+
+
+
+</script>
+
+<script>
+    window.onload = function () {
+        if (window.history.replaceState) {
+            window.history.replaceState(null, null, window.location.href);
+        }
+    };
+</script>
+
+
+

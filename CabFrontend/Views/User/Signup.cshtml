@@ -1,0 +1,78 @@
+﻿@model CabFrontend.Models.User;
+@{
+    ViewData["Title"] = "Signup";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h1>Signup</h1>
+
+<link rel="stylesheet" href="~/css/signup.css" asp-append-version="true" />
+
+<div class="container">
+	<div class="screen">
+		<div class="screen__content">
+
+
+			<form class="login" asp-controller="User" id="registrationForm" method="post">
+				@Html.ValidationSummary(true)
+				<div>
+					<h2>Welcome</h2>
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input asp-for="FirstName" class="login__input" placeholder="First Name" required>
+						@Html.ValidationMessageFor(Model => Model.FirstName)
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-lock"></i>
+						<input asp-for="LastName" type="text" class="login__input" placeholder="Last Name" required>
+
+						@* @Html.ValidationMessageFor(Model => Model.LastName) *@
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-user"></i>
+						<input asp-for="Email" id="Email" type="email" class="login__input" placeholder="User name / Email" required>.
+						<div id="emailValidationMessage" style="color: red;"></div>
+						@* @Html.ValidationMessageFor(Model => Model.Email) *@
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-lock"></i>
+						<input asp-for="PhoneNumber" type="tel" id="PhoneNumber" name="PhoneNumber" class="login__input" placeholder="PhoneNumber" required>
+						@* @Html.ValidationMessageFor(Model => Model.PhoneNumber) *@
+						<div id="phoneValidationMessage" style="color: red;"></div>
+					</div>
+					<div class="login__field">
+						<i class="login__icon fas fa-lock"></i>
+						<input asp-for="Password" type="password" id="Password" name="Password" class="login__input" placeholder="Password" required>
+						<div id="passwordValidationMessage" style="color: red; font-size:10px"></div>
+					</div>
+				</div>
+
+				<button type="submit" class="button login__submit" asp-action="SignUp" asp-controller="User">
+					<span class="button__text">Sign Up</span>
+					<i class="button__icon fas fa-chevron-right"></i>
+				</button>
+			</form>
+		</div>
+
+
+
+
+
+
+
+		<div class="screen__background">
+			<span class="screen__background__shape screen__background__shape4"></span>
+			<span class="screen__background__shape screen__background__shape3"></span>
+			<span class="screen__background__shape screen__background__shape2"></span>
+			<span class="screen__background__shape screen__background__shape1"></span>
+		</div>
+	</div>
+</div>
+<script src="~/js/Signup.js"> </script>
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.validate/1.19.3/jquery.validate.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery.validate.unobtrusive/3.2.12/jquery.validate.unobtrusive.min.js"></script>
+
+
+

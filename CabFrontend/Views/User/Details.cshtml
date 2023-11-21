@@ -1,0 +1,118 @@
+﻿@{
+    ViewData["Title"] = "Details";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+    var email = Context.Session.GetString("email");
+    var name = Context.Session.GetString("Name");
+}
+
+<!DOCTYPE html>
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+    <title>User Profile</title>
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .container {
+            background-color: #ffffff;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 10px;
+            
+        }
+
+        .profile-picture {
+            max-width: 100%;
+            height: auto;
+            border-radius: 50%;
+            margin-bottom: 20px;
+        }
+
+        .nav-pills {
+            flex-direction: column;
+            background-color: lightgrey;
+            border-radius: 5px;
+            padding: 10px;
+            color: #ffffff;
+        }
+
+        .nav-link {
+            border-radius: 5px;
+            margin-bottom: 5px;
+            color: #ffffff;
+        }
+
+        .tab-content {
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+
+        h4 {
+            color: #007bff;
+        }
+
+        p {
+            color: #555555;
+        }
+        h5 {
+            color:black;
+        }
+    </style>
+</head> 
+ <body>
+
+    <div class="container mt-4">
+        <div class="row">
+            <div class="col-md-3">
+                <!-- User Information -->
+                <img src="~/css/profileimg.jpg" alt="Profile Picture" class="img-fluid mb-3">
+                <h4>@name</h4>
+               
+
+                <!-- Navigation Tabs -->
+                <ul class="nav nav-pills flex-column">
+                    <li class="nav-item">
+                        <a class="nav-link active" href="#personal-details" data-toggle="tab">Personal Details</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#bio" data-toggle="tab">Bio</a>
+                    </li>
+                    <!-- Add more tabs as needed -->
+                </ul>
+            </div>
+            <div class="col-md-9">
+                <!-- Tab Content -->
+                <div class="tab-content">
+                    <div class="tab-pane fade show active" id="personal-details">
+                        <!-- Personal Details Section -->
+                        <h5>Personal Details</h5>
+                        <p>Email: @email</p>
+                        <p></p>
+                        <!-- Add more personal details as needed -->
+                    </div>
+                    <div class="tab-pane fade" id="bio">
+                        <!-- Bio Section -->
+                        <h5>Bio</h5>
+                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit....</p>
+                    </div>
+                    <!-- Add more tab content as needed -->
+                </div>
+            </div> 
+        </div>
+    </div>
+
+   @*  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script> *@
+
+
+</body>
+
+

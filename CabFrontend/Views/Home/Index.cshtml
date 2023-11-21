@@ -1,0 +1,66 @@
+﻿@model CabFrontend.Models.User;
+<!DOCTYPE html>
+
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="./css/demo.css">
+</head>
+<body>
+    <div class="wrapper fadeInDown">
+        <div id="formContent">
+            <!-- Tabs Titles -->
+            <h2 class="active" id="loginTab"> Sign In </h2>
+            <h2 class="inactive underlineHover" id="signupTab">Sign Up </h2>
+
+            <!-- Login Form -->
+            <form id="loginForm" asp-controller="User" asp-action="ValidateIndex" method="post">
+                <input asp-for="Email" type="email" class="fadeIn second"  placeholder="Email">
+                <input asp-for="Password" type="password" id="password" class="fadeIn third" placeholder="password">
+                <input type="submit" class="fadeIn fourth" value="Log In">
+            </form>
+
+            <!-- Signup Form (Initially hidden) -->
+            <form id="signupForm" style="display: none;" class="login" asp-controller="User" asp-action="SignUp" method="post">
+                <!-- Add signup form fields here -->
+                <input asp-for="FirstName" type="text" class="fadeIn third"  placeholder="FirstName">
+                <input asp-for="LastName" type="text"  class="fadeIn third" placeholder="LastName">
+                <input asp-for="Email" type="email"  class="fadeIn third" placeholder="Email">
+                <input asp-for="PhoneNumber" type="tel"  class="fadeIn third"  placeholder="PhoneNumber">
+                <input asp-for="Password" type="password"  class="fadeIn third"  placeholder="Password">
+                <input type="submit" class="fadeIn fourth" value="Sign Up">
+            </form>
+
+            <!-- Remind Password -->
+            <div id="formFooter">
+                <a class="underlineHover" href="#">Forgot Password?</a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('signupTab').addEventListener('click', function () {
+            // Hide login form and show signup form
+            document.getElementById('loginForm').style.display = 'none';
+            document.getElementById('signupForm').style.display = 'block';
+
+            // Toggle the "active" and "inactive" classes
+            document.getElementById('loginTab').classList.remove('active');
+            document.getElementById('loginTab').classList.add('inactive');
+            document.getElementById('signupTab').classList.remove('inactive');
+            document.getElementById('signupTab').classList.add('active');
+        });
+
+        document.getElementById('loginTab').addEventListener('click', function () {
+            // Hide signup form and show login form
+            document.getElementById('signupForm').style.display = 'none';
+            document.getElementById('loginForm').style.display = 'block';
+
+            // Toggle the "active" and "inactive" classes
+            document.getElementById('signupTab').classList.remove('active');
+            document.getElementById('signupTab').classList.add('inactive');
+            document.getElementById('loginTab').classList.remove('inactive');
+            document.getElementById('loginTab').classList.add('active');
+        });
+    </script>
+</body>
+</html>

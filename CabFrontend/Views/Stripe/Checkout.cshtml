@@ -1,0 +1,145 @@
+﻿@model CabFrontend.Models.PaymentRequest
+@{
+    ViewData["Title"] = "Checkout";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+<!DOCTYPE html>
+<html>
+<head>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+        }
+
+        .payment-container {
+            max-width: 400px;
+            margin: 0 auto;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+
+        h2 {
+            text-align: center;
+            color: #333;
+        }
+
+        .form-group {
+            margin-bottom: 15px;
+        }
+
+        label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 3px;
+        }
+
+        #submit-button {
+            background-color: #007BFF;
+            color: #fff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 3px;
+            cursor: pointer;
+        }
+
+            #submit-button:hover {
+                background-color: #0056b3;
+            }
+    </style>
+</head>
+<body>
+    <div class="payment-container">
+        <h2>Payment Gateway</h2>
+        @using (Html.BeginForm("ProcessPayment", "Stripe", FormMethod.Post, new { @class = "needs-validation", novalidate = "novalidate" }))
+        {
+            <form id="payment-form">
+                <div class="form-group">
+                    <label for="payment-method">Select Payment Method</label>
+                    <select id="payment-method" required>
+                        <option value="card">Select Payment Method</option>
+                        <option value="card">Credit/Debit Card</option>
+                        <option value="upi">UPI</option>
+                        <option value="paypal">PayPal</option>
+                        <!-- Add more options for different payment methods -->
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label for="amount">Amount</label>
+                    <input id="amount" name="Amount" value="@TempData["TripAmount"]" readonly>
+                </div>
+                <div class="form-group" id="card-details">
+                    <div class="form-group">
+                        <label for="card-number">Card Number</label>
+                        <input type="text" id="card-number" name="cardNumber" placeholder="1234 5678 9012 3456" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="expiry">Expiry Date</label>
+                        <input type="text" id="expiry" name="expiry" placeholder="MM / YY" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="cvc">CVC</label>
+                        <input type="text" id="cvc" name="cvc" placeholder="123" required>
+                    </div>
+                </div>
+                <div class="form-group" id="upi-details">
+                    <label for="upi-id">UPI ID</label>
+                    <input type="text" id="upi-id" name="upiId" placeholder="example@upi">
+                </div>
+                <div class="form-group" id="paypal-details">
+                    <label for "paypal-email">PayPal Email</label>
+                    <input type="text" id="paypal-email" name="paypalEmail" placeholder="example@example.com">
+                </div>
+                <button type="submit" id="submit-button">Pay Now</button>
+            </form>
+        }
+    </div>
+
+    <script>
+        const paymentMethodDropdown = document.getElementById("payment-method");
+        const cardDetails = document.getElementById("card-details");
+        const upiDetails = document.getElementById("upi-details");
+        const paypalDetails = document.getElementById("paypal-details");
+
+        // Initially, hide all payment method details
+        cardDetails.style.display = "none";
+        upiDetails.style.display = "none";
+        paypalDetails.style.display = "none";
+
+        paymentMethodDropdown.addEventListener("change", function () {
+            // Hide all payment method details
+            cardDetails.style.display = "none";
+            upiDetails.style.display = "none";
+            paypalDetails.style.display = "none";
+
+            // Show the selected payment method's details
+            const selectedMethod = paymentMethodDropdown.value;
+            if (selectedMethod === "card") {
+                cardDetails.style.display = "block";
+            } else if (selectedMethod === "upi") {
+                upiDetails.style.display = "block";
+            } else if (selectedMethod === "paypal") {
+                paypalDetails.style.display = "block";
+            }
+        });
+    </script>
+</body>
+</html>
+

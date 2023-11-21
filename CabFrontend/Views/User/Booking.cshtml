@@ -1,0 +1,175 @@
+﻿@model List<Reservation>;
+
+@{
+    ViewData["Title"] = "My Bookings";
+    Layout = "~/Views/Shared/_AfterLoginLayout.cshtml";
+}
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css">
+<script src="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.all.min.js"></script>
+
+<style>
+    body {
+        background-color: #f4f4f4;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        background: #ffffff;
+        padding: 20px;
+        border-radius: 15px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    h1 {
+        text-align: center;
+        margin-bottom: 30px;
+        color: #333;
+        font-size: 2em;
+    }
+
+    .alert-info {
+        margin-top: 20px;
+        background-color: #74c0fc;
+        color: #ffffff;
+        border: 1px solid #007bff;
+        border-radius: 10px;
+        padding: 15px;
+    }
+
+    table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        overflow: hidden;
+        border-radius: 15px;
+        background-color: #ffffff;
+    }
+
+    th, td {
+        padding: 15px;
+        text-align: left;
+        border-bottom: 1px solid #dee2e6;
+    }
+
+    th {
+        background: linear-gradient(to right, #007bff, #0056b3);
+        color: #ffffff;
+    }
+
+    tbody tr:hover {
+        background-color: #f0f0f0;
+        transform: scale(1.02);
+        transition: all 0.3s ease;
+    }
+
+    .btn-action {
+        margin-right: 5px;
+        transition: transform 0.2s ease-in-out;
+        background-color: #28a745;
+        border-color: #28a745;
+    }
+
+        .btn-action:hover {
+            transform: scale(1.1);
+        }
+</style>
+
+<div class="container mt-5">
+    <h1 class="mb-4">My Bookings</h1>
+
+    @if (Model == null || !Model.Any())
+    {
+        <div class="alert alert-info" role="alert">
+            <strong>No bookings yet!</strong> You haven't made any bookings.
+        </div>
+    }
+    else
+    {
+        <div class="table-responsive">
+            <table class="table table-bordered table-hover">
+                <thead class="thead-dark">
+                    <tr>
+                        <th>Reservation ID</th>
+                        <th>Destination</th>
+                        <th>Booking Time</th>
+                        <th>Status</th>
+                        <th>Amount</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    @foreach (var booking in Model)
+                    {
+                        <tr>
+                            <td>@booking.Id</td>
+                            <td>@booking.Destination</td>
+                            <td>@booking.BookingTime</td>
+                            <td>
+                                @if (booking.Status == ReservationStatus.Completed && booking.isPaid)
+                                {
+                                    <span class="text-success">@booking.Status</span>
+                                }
+                                else
+                                {
+                                    <span>@booking.Status</span>
+                                }
+                            </td>
+                            <td>@String.Format("{0:F2}", (booking.tripAmount))</td>
+                            <td>
+                                @if (booking.Status == ReservationStatus.Confirmed)
+                                {
+                                    <form asp-controller="Reservation" asp-action="CancelCab" method="post" onsubmit="event.preventDefault(); confirmCancellation('@booking.Id');">
+                                        <input type="hidden" name="reservationId" value="@booking.Id" />
+                                        <button type="submit" class="btn btn-danger btn-sm btn-action">Cancel</button>
+                                    </form>
+                                }
+
+                                @if (booking.Status == ReservationStatus.Completed && !booking.isPaid)
+                                {
+                                    <form asp-controller="Stripe" asp-action="Checkout">
+                                        <input type="hidden" name="tripAmount" value="@String.Format("{0:F2}", (booking.tripAmount))" />
+                                        <input type="hidden" name="id" value="@booking.Id" />
+                                        <button type="submit" class="btn btn-danger btn-sm btn-action">Payment</button>
+                                    </form>
+                                }
+
+                                @if (booking.Status == ReservationStatus.Completed && booking.isPaid && !booking.isRated)
+                                {
+                                    <form asp-controller="Rating" asp-action="PostRating" method="post">
+                                        <input type="hidden" name="cabId" value="@booking.CabId" />
+                                        <input type="hidden" name="UserId" value="@booking.UserId" />
+                                        <input type="hidden" name="reservationId" value="@booking.Id" />
+                                        <button type="submit" class="btn btn-danger btn-sm btn-action">Rating</button>
+                                    </form>
+                                }
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
+    }
+</div>
+
+<script>
+    function confirmCancellation(reservationId) {
+        Swal.fire({
+            title: 'Are you sure?',
+            text: 'You want to cancel the cab',
+            icon: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#d33',
+            cancelButtonColor: '#3085d6',
+            confirmButtonText: 'Yes, cancel it!'
+        }).then((result) => {
+            if (result.isConfirmed) {
+                // User confirmed, manually submit the form
+                var form = document.location.href = '/Reservation/CancelCab?reservationId=' + reservationId;
+                form.submit();
+            }
+        });
+    }
+</script>

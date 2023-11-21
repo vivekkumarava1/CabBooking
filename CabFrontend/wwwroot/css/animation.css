@@ -1,0 +1,23 @@
+﻿
+.animated-message {
+    display: none;
+    text-align: center;
+    background-color: #FF0000; /* Red background color */
+    color: #FFFFFF; /* White text color */
+    font-size: 18px;
+    padding: 10px;
+}
+
+.fadeIn {
+    animation: fadeIn 1s ease-in-out;
+}
+
+@keyframes fadeIn {
+    0% {
+        opacity: 0;
+    }
+
+    100% {
+        opacity: 1;
+    }
+}
